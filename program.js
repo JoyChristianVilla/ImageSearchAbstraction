@@ -1,13 +1,13 @@
 var fetch = require('isomorphic-fetch')
 var express = require('express');
 var mongoose = require('mongoose')
+
 var app = express();
 
-/*var Image = require('./models/image');
-mongoose.connect('mongodb://localhost/image-search')*/
-
 var Term = require('./models/time');
-mongoose.connect('mongodb://localhost/search-time')
+// Remove deprecation warning by passing in this optional config object
+// http://mongoosejs.com/docs/connections.html for more info
+mongoose.connect('mongodb://localhost/search-time', { useMongoClient: true })
 
 app.get('/api/imagesearch/:term', function (req, res) {
   var searchTerm = new Term({
@@ -52,13 +52,6 @@ app.get('/latest/imagesearch', function (req, res) {
   var cursor = Term.find({}).sort({when: 'desc'}).exec(function(err, docs) {
     res.send(docs)
   });
-/*  cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-         console.dir(doc);
-      } else {
-         res.send(doc)
-      }*/
 });
 
 app.listen(3000, function() {

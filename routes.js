@@ -45,7 +45,7 @@ module.exports = (app) => {
 
   app.get('/latest/imagesearch', function (req, res) {
     // return the 5 most recent searches
-    Term.find({}).sort({ createdAt: -1 }).limit(5).exec(function(err, docs) {
+    Term.find({}, { term: 1 }).sort({ createdAt: -1 }).limit(5).exec(function(err, docs) {
       // TODO: handle possible errors
       res.send(docs)
     });
